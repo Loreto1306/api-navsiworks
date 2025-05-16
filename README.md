@@ -26,9 +26,19 @@ This is particularly useful in industrial projects where different disciplines (
 - `traceback`
 - `sys`
 - `time`
-
 ---
 
+## 🔁 Requirements
+- Python 3.10+ installed
+- Autodesk Navisworks Manage 2025 (or later) installed and licensed
+- .NET assemblies available:
+   - Autodesk.Navisworks.Api.Automation.dll
+- Python.NET (pythonnet) installed:
+```
+pip install pythonnet, flask, flask_cors
+```
+
+---
 ## 🔁 Workflow
 
 ### 1. Initial Check (PHP ➜ Python)
