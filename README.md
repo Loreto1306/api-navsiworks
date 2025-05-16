@@ -1,22 +1,51 @@
-# 📌 Descrição do Projeto
-Esta API foi desenvolvida em Python utilizando Flask com o objetivo de automatizar o processo de criação de Reviews no Autodesk Navisworks, a partir de dados estruturados enviados por um servidor PHP. O sistema estabelece uma integração entre uma aplicação web (PHP) e o ambiente desktop do Navisworks por meio de automação com bibliotecas nativas da Autodesk (controls.dll, api.dll).
+# Navisworks Automation API (Flask + Python.NET)
 
-# ⚙️ Como Funciona
-Requisição Inicial (PHP ➜ API Python):
-Um script em PHP realiza uma requisição GET para verificar se a API Flask está ativa e pronta para receber dados.
+This project provides an automation API for Autodesk Navisworks Manage, built with Python and Flask, designed to streamline the creation of model reviews based on structured input data sent from a PHP system. It integrates a web environment (PHP) with the desktop environment of Navisworks through the Autodesk Automation API, accessed using `.NET` libraries (`controls.dll`, `api.dll`) via `pythonnet`.
 
-# Envio de Dados (PHP ➜ Python):
-Após a confirmação, o PHP envia um payload em JSON contendo informações para a criação de um review, como caminho dos arquivos .nwd, título do review, observações e demais metadados necessários.
+---
 
-# Execução da Automação (Python ➜ Navisworks):
-O script Python (api-call.py) processa os dados recebidos e utiliza a API de automação do Navisworks (via controls.dll e api.dll) para abrir os arquivos .nwd, gerar os reviews desejados e compilar os resultados conforme solicitado.
+## 📌 Project Overview
 
-Resposta ao Servidor (Python ➜ PHP):
-Ao final do processo, a API retorna um JSON para o servidor PHP com a confirmação da execução ou, em caso de erro, detalhes sobre a falha.
+The goal is to automate the process of federating engineering models (e.g., `.dwg`) into a single `.nwd` file using Navisworks. A PHP server sends structured JSON data to this Python API, which processes the files and generates a federated model, returning a success or error response.
 
-# 📁 Estrutura dos Arquivos
-client.php – Script PHP responsável por iniciar a comunicação com a API Python e enviar os dados de review.
+This is particularly useful in industrial projects where different disciplines (civil, electrical, piping, etc.) produce separate models that need to be merged periodically.
 
-api-call.py – Responsável por receber os dados JSON, processar a automação no Navisworks e retornar o resultado.
+---
 
-app.py – API Flask que expõe os endpoints necessários para comunicação entre PHP e Python/Navisworks.
+## 🔁 Workflow
+
+### 1. Initial Check (PHP ➜ Python)
+A PHP script performs a `GET` request to the `/status` endpoint to verify if the Python API is active.
+
+### 2. Data Submission (PHP ➜ Python)
+After validation, PHP sends a `POST` request containing the necessary model data in JSON format:
+- Contract ID
+- Project/discipline area (`os`)
+- Folder structure per discipline (`pastas`)
+
+### 3. Model Federation (Python ➜ Navisworks)
+The `api-call.py` script receives and serializes this JSON, triggering `open-file.py`, which:
+- Launches Navisworks via `NavisworksApplication`
+- Recursively traverses folders for `.dwg` files
+- Appends them into a unified session
+- Saves the federated `.nwd` model to a target location
+
+### 4. Response (Python ➜ PHP)
+Once complete, the API returns a JSON response with:
+- Return code
+- Console output (stdout/stderr)
+- Any errors encountered during processing
+
+---
+
+## 🧪 Example JSON Payload
+
+```json
+{
+  "id_contrato": "1234",
+  "os": "ENG001",
+  "pastas": {
+    "civil": "C:/Modelos/Civil",
+    "eletrica": "C:/Modelos/Eletrica"
+  }
+}
