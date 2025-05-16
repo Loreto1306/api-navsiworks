@@ -12,6 +12,23 @@ This is particularly useful in industrial projects where different disciplines (
 
 ---
 
+## 📌 Library: 
+
+### 📖 Used Packages and Library:
+- `Flask`
+- `flask_cors`
+- `subprocess`
+- `json`
+- `platform`
+- `socket`
+- `os`
+- `pythonnet`
+- `traceback`
+- `sys`
+- `time`
+
+---
+
 ## 🔁 Workflow
 
 ### 1. Initial Check (PHP ➜ Python)
