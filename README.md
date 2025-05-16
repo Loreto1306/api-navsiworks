@@ -1,6 +1,6 @@
 # Navisworks Automation API (Flask + Python.NET)
 
-This project provides an automation API for Autodesk Navisworks Manage, built with Python and Flask, designed to streamline the creation of model reviews based on structured input data sent from a PHP system. It integrates a web environment (PHP) with the desktop environment of Navisworks through the Autodesk Automation API, accessed using `.NET` libraries (`controls.dll`, `api.dll`) via `pythonnet`.
+This project provides an automation API for Autodesk Navisworks Manage, built with Python and Flask, designed to streamline the creation of model reviews based on structured input data sent from a PHP system. It integrates a web environment (PHP) with the desktop environment of Navisworks through the Autodesk Automation API, accessed using `.NET` libraries (`controls.dll`, `api.dll`, `automation.dll`) via `pythonnet`.
 
 ---
 
@@ -42,10 +42,15 @@ Once complete, the API returns a JSON response with:
 
 ```json
 {
-  "id_contrato": "1234",
-  "os": "ENG001",
-  "pastas": {
-    "civil": "C:/Modelos/Civil",
-    "eletrica": "C:/Modelos/Eletrica"
-  }
+   "folder": 
+      [
+        "Civil", 
+        "Electrical", 
+        "Structural", 
+        "Instrumentation", 
+        "Mechanical", 
+        "Piping"
+      ], 
+   "os": "ENG001", 
+   "id": "2788"
 }
